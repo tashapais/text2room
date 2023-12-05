@@ -1,0 +1,29 @@
+
+[
+  {
+    "prompt": "objects on a table viewed from multiple angles",
+    "negative_prompt": "furniture, blurry, text, plants, curtains, cushions",
+    "n_images": 360,
+    "surface_normal_threshold": 0.5,
+    "fn_name": "rotate_inwards_360_trajectory",
+    "fn_args": {
+      "n_steps": 360,
+      "height": 1.0,
+      "radius": 1.0
+    },
+    "adaptive": [
+      {
+        "arg": "height",
+        "delta": 0.1,
+        "min": 0.0,
+        "max": 2.0
+      },
+      {
+        "arg": "radius",
+        "delta": 0.5,
+        "min": 0.5,
+        "max": 5.0
+      }
+    ]
+  }
+]
