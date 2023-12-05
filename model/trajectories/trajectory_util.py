@@ -207,6 +207,28 @@ def _double_sphere_rot_xz(i, steps, radius=4.0, height=0.0, phi=20.0):
         c2w[1, 3] = height
     return torch.inverse(c2w)
 
+def rotate_inwards_360(current_step, n_steps, **args):
+    '''
+    Rotate the camera 360 degrees inwards around a central point using a combination of existing functions.
+
+    :param current_step: Current step in the trajectory
+    :param n_steps: Total number of steps for the trajectory
+    :param args: Additional arguments (e.g., height, radius)
+    '''
+    height = args.get('height', 0)
+    radius = args.get('radius', 1)
+
+    # Calculate rotation for current step
+    angle = -current_step * 360 / n_steps
+
+    # Combine rotations and minimal translations
+    R = _rot_y(angle)
+    T = _trans_x(0) + _trans_y(height) + _trans_z(-radius)
+
+    return get_extrinsics(R, T)
+
+def rotate_inwards_360_trajectory(**args):
+    return _config_fn(rotate_inwards_360, **args)
 #######################
 # PUBLIC TRAJECTORIES #
 #######################
